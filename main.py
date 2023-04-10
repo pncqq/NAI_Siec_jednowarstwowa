@@ -38,23 +38,25 @@ def train_perceptron(inputs, labels, alpha, epochs, bias=np.zeros(4), weights=np
 
 
 def main():
-    # Wczytywanie plikow
-    train_text, train_labels, lang_count = functions.load_data("Data/lang.train.csv")
-    test_text, test_labels, lang_count1 = functions.load_data("Data/lang.test.csv")
+    # Wczytywanie plikow w formacie TEKST-VALUE
+    train_text = functions.load_data("Data/lang.train.csv")
+    test_text = functions.load_data("Data/lang.test.csv")
 
-    # Zakonczenie gdy pliki sie nie zgadzaja ze soba
-    if lang_count != lang_count1:
-        quit(997)
+    # Przerabianie ww. na znormalizowane wektory
+    vec1 = functions.text_to_vector(train_text)
+    vec2 = functions.text_to_vector(test_text)
 
-    # Treningowe
-    input_vectors = functions.text_to_vector(train_text)
-    weights_vector = functions.random_weight_vector(lang_count)
+    # Generowanie randomowej macierzy wag
+    weight_matrix = functions.random_weight_matrix()
 
-    # Mapowanie języków
-    mapped_labels = functions.map_labels_to_integers(train_labels)
+    # Generowanie odchylenia
+    bias = functions.random_bias_matrix()
 
-    # Trenowanie
-    train_perceptron(input_vectors, mapped_labels, 0.5, 50)
+    # Stała uczenia
+    alpha = 1
+
+    # Uczenie
+    functions.learn(vec1, weight_matrix, alpha, bias)
 
 
 if __name__ == '__main__':
