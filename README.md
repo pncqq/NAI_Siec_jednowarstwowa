@@ -1,40 +1,55 @@
-# NAI-Siec-jednowarstwowa
+# 🧬 NAI_Siec_jednowarstwowa
 
-Celem projektu jest stworzenie sieci jednowarstwowej identyfikującej język, w jakim na-
-pisany jest tekst wejściowy.
-W plikach lang.train.csv i lang.test.csv znajduje się zbiór tekstów w czterech ję-
-zykach – angielskim, niemieckim, polskim i hiszpańskim. Aby zaklasyfikować dany tekst
-należy zliczyć częstotliwość występowania każdej z liter alfabetu łacińskiego. Na potrzeby
-tego zadania można zignorować wszystkie niestandardowe litery (znaki diakrytyczne, etc.)
-i zliczać tylko częstości wystąpień 26 podstawowych liter alfabetu, pomijając wszystkie
-inne znaki.
-Dla każdego tekstu wejściowego należy wygenerować 26-elementowy wektor zawierający
-liczbę wystąpień każdej z liter i następnie go znormalizować:
+Projekt przedstawia implementację **sieci jednowarstwowej (perceptronu)** do klasyfikacji języka tekstu na podstawie częstości występowania liter w zdaniu.
 
-v̂ = v / |v|
+## 📖 Cel projektu
 
-Wyjście sieci powinno mieć reprezentację lokalną: do każdego neuronu przypisujemy jeden
-z języków. Dla danego tekstu wartość wyjściową 1 powinien mieć neuron reprezentujący
-język tekstu, a pozostałe wartość 0.
-Można wykorzystać funkcję aktywacji progową lub liniową (f (net) = net) (w przypadku
-obu funkcji reguła modyfikacji wag jest identyczna, ponieważ dla funkji liniowej f ′ (net) =
-1). Aby klasyfikować język tekstu, wybieramy perceptron z maksymalną aktywacją.
-Program powinien:
-- Trenować sieć danymi z pliku lang.train.csv i następnie wypisać dokładność kla-
-syfikacji dla danych z pliku lang.test.csv.
-- Dostosować się do dowolnego zbioru danych w podobnym formacie, np. z inną liczbą
-języków.
-- Zapewniać interfejs umożliwiający wklejenie nowego tekstu (np. w konsoli) i rozpo-
-znanie języka.
-- (Opcjonalnie) wypisać te teksty ze zbioru testowego, dla których klasyfikacja była
-błędna.
+Zbudowanie prostej sieci neuronowej rozpoznającej język tekstu spośród czterech możliwych: **angielski, niemiecki, polski, hiszpański**, na podstawie analizy częstotliwości liter alfabetu łacińskiego (26 liter, bez znaków diakrytycznych).
 
-Wskazówki:
-- W tekstach mogą znajdować się przecinki, więc przy wczytywaniu plików nie zadzia-
-ła dzielenie każdej linii split(",") (ale można użyć np. split(",", 1) (Python)
-lub split(",", 2) (Java)).
-- Użycie liniowej funkcji aktywacji zmniejsza szanse na niejednoznaczną wartość wyj-
-ściową sieci (kiedy więcej niż jeden perceptron ma wartość wyjściową 1).
-- Warto normalizować także wektory wag.
-- Można wykorzystać implementację perceptronu z wcześniejszego projektu, lub im-
-plementować sieć od początku przy użyciu operacji na macierzach.
+## 📂 Zawartość repozytorium
+
+- `main.py` – główna logika aplikacji
+- `functions.py` – pomocnicze funkcje (np. preprocessing, predykcja)
+- `Data/lang.train.csv` – dane treningowe
+- `Data/lang.test.csv` – dane testowe
+- `.idea/` – pliki konfiguracyjne PyCharm
+
+## ⚙️ Technologie
+
+- Python 3.x
+- NumPy
+
+## 🚀 Jak to działa?
+
+1. Teksty zamieniane są na wektory 26 liczb (liczba wystąpień liter a-z).
+2. Wektor jest normalizowany:
+   \[ \hat{v} = \frac{v}{|v|} \]
+3. Uczenie perceptronu następuje przy użyciu funkcji liniowej lub progowej.
+4. Do każdego języka przypisany jest osobny neuron.
+5. W fazie testu wybierany jest neuron o najwyższej aktywacji.
+
+## 🔄 Funkcjonalności
+
+- Trening sieci na zbiorze `lang.train.csv`
+- Testowanie skuteczności na `lang.test.csv`
+- Obsługa wklejenia tekstu z klawiatury i rozpoznania języka
+- (Opcjonalnie) wypisanie błędnie sklasyfikowanych tekstów
+
+## ▶️ Jak uruchomić
+
+1. Sklonuj repo:
+```bash
+git clone https://github.com/pncqq/NAI_Siec_jednowarstwowa.git
+cd NAI_Siec_jednowarstwowa
+```
+
+2. Uruchom program:
+```bash
+python main.py
+```
+
+> 🔎 Program automatycznie wczyta dane z katalogu `Data/`. W konsoli można wkleić nowy tekst do klasyfikacji.
+
+## 👨‍💻 Autor
+**Filip Michalski**  
+Projekt wykonany w ramach kursu NAI (Narzędzia AI) jako praktyczne wprowadzenie do sieci neuronowych i klasyfikacji tekstu.
